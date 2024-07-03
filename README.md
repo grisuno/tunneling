@@ -25,7 +25,7 @@ Tunneling is a simple web service that allows you to fetch and display web pages
 
 2. Install the required dependencies:
     ```sh
-    pip install Flask requests
+    chmod +x && ./install.sh
     ```
 
 ## Usage
