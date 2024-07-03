@@ -12,32 +12,37 @@ Descripción:
 """
 from flask import Flask, request, render_template_string, Response
 import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
 @app.route('/')
-def home():
+def index():
     url = request.args.get('url')
-    if url:
-        return f'<iframe src="/proxy?url={url}" width="100%" height="600px"></iframe>'
-    return 'Please provide a URL as a query parameter.'
+    if not url:
+        return 'No URL provided', 400
+    return render_template_string('<iframe src="/proxy?url={{ url }}" style="width:100%; height:100vh;"></iframe>', url=url)
 
 @app.route('/proxy')
 def proxy():
     url = request.args.get('url')
     if not url:
-        return "URL parameter is missing", 400
-
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-    except requests.RequestException as e:
-        return f"Error fetching the URL: {e}", 500
-
+        return 'No URL provided', 400
+    
+    response = requests.get(url)
     content_type = response.headers.get('Content-Type', '')
 
     if 'text/html' in content_type:
-        return render_template_string(response.text)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        for tag in soup.find_all(['a', 'img', 'link', 'script']):
+            attr = 'href' if tag.name == 'a' or tag.name == 'link' else 'src'
+            if tag.has_attr(attr):
+                original_url = tag[attr]
+                if not original_url.startswith('http'):
+                    original_url = requests.compat.urljoin(url, original_url)
+                tag[attr] = f'/proxy?url={original_url}'
+        html_content = str(soup)
+        return Response(html_content, content_type=content_type)
     else:
         return Response(response.content, content_type=content_type)
 
