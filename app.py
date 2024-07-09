@@ -28,8 +28,7 @@ def proxy():
     url = request.args.get('url')
     if not url:
         return 'No URL provided', 400
-    
-    response = requests.get(url)
+    response = requests.request(request.method, url, data=request.form)
     content_type = response.headers.get('Content-Type', '')
 
     if 'text/html' in content_type:
