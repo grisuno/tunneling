@@ -2,7 +2,9 @@
 
 # Tunneling
 
-Tunneling is a simple web service that allows you to fetch and display web pages from other servers through a Flask application. It acts as a proxy to render the content of a given URL within an iframe.
+## Dont use in production environments, this it's app for practice pentesting, have an Full server-side request forgery in the line app.py:38 and it´s in debug mode. so... 
+
+Insecure Tunneling is a simple web service that allows you to fetch and display web pages from other servers through a Flask application. It acts as a proxy to render the content of a given URL within an iframe. and to an atacker allow to Full server-side request forgery practice. like web pen testing activities.
 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
