@@ -1,5 +1,9 @@
 # API
 
 ## app.py
-- `index` (function) `app.py:21` `def index()`
-- `proxy` (function) `app.py:32` `def proxy()`
+
+### index (function) `def index()`
+- Defined: `app.py:21`
+
+### proxy (function) `def proxy()`
+- Defined: `app.py:32`
